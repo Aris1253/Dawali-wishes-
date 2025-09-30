@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali Wishes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Laila:wght@500;700&display=swap');
+
+        body {
+            font-family: 'Laila', serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2a080a;
+            overflow: hidden;
+        }
+
+        #fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            background: rgba(42, 8, 10, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
+        }
+
+        #diwaliGif {
+            max-width: 60%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FFC46B;
+        }
+
+        .greeting {
+            min-height: 80px;
+        }
+        
+        h1, h2 {
+            margin: 10px 0;
+            animation: text-glow 2.0s infinite alternate;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #FFD700;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.6em;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        @keyframes text-glow {
+            from {
+                text-shadow: 0 0 8px #fff, 0 0 15px #FF9933, 0 0 25px #E44D2E;
+            }
+            to {
+                text-shadow: 0 0 15px #fff, 0 0 25px #FF9933, 0 0 35px #E44D2E;
+            }
+        }
+
+        .input-area {
+            margin-top: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #FFC46B;
+            font-weight: 500;
+        }
+
+        #nameInput {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #FFD700;
+            background-color: rgba(0,0,0,0.2);
+            color: #fff;
+            font-size: 1em;
+            font-family: 'Laila', serif;
+            margin-bottom: 15px;
+        }
+        #nameInput::placeholder {
+            color: #ccc;
+        }
+
+        .share-button {
+            background: linear-gradient(145deg, #25D366, #128C7E);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-family: 'Laila', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .share-button:hover {
+            transform: scale(1.05);
+        }
+
+        .share-button i {
+            font-size: 1.5em;
+        }
+
+        #linkContainer {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #generatedLink {
+            width: calc(100% - 24px);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #FFD700;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fireworks-container"></div>
+
+    <div class="container">
+        <div class="greeting" id="greetingMessage"></div>
+        
+        <img src="Laxmi.gif" alt="Happy Diwali" id="diwaliGif">
+
+        <div class="input-area">
+            <label for="nameInput">Apna Shubh Naam Likhein:</label>
+            <input type="text" id="nameInput" placeholder="Jaise: Ramesh Kumar">
+            <button class="share-button" onclick="generateAndShareLink()">
+                <i class="fab fa-whatsapp"></i> शेयर करें
+            </button>
+        </div>
+
+        <div id="linkContainer">
+            <p style="color: #fff;">Mobile par share ka option nahi hai. Link neeche se copy karein:</p>
+            <input type="text" id="generatedLink" readonly>
+            <button onclick="copyLink()">Link Copy Karein</button>
+        </div>
+    </div>
+
+    <script>
+        // Greeting message ko turant dikhana (FIXED)
+        (function showGreeting() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get('from');
+            const greetingElement = document.getElementById('greetingMessage');
+
+            if (greetingElement) {
+                if (senderName) {
+                    const decodedName = decodeURIComponent(senderName);
+                    greetingElement.innerHTML = `<h2>${decodedName} की तरफ से</h2><h1>Happy Diwali!</h1>`;
+                } else {
+                    greetingElement.innerHTML = `<h1>Happy Diwali!</h1>`;
+                }
+            }
+        })();
+
+        // Share aur Copy ke functions
+        async function generateAndShareLink() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+
+            if (name === "") {
+                alert("कृपया अपना शुभ नाम लिखें!");
+                return;
+            }
+
+            const baseUrl = window.location.href.split('?')[0];
+            const encodedName = encodeURIComponent(name);
+            const newLink = `${baseUrl}?from=${encodedName}`;
+            const shareText = `${name} ने आपको दिवाली की हार्दिक शुभकामनाएँ भेजी हैं! इस लिंक पर क्लिक करके देखें: `;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Diwali Ki Shubhkamnayein!',
+                        text: shareText,
+                        url: newLink
+                    });
+                } catch (error) {
+                    console.error('Error sharing:', error);
+                    showFallbackLink(newLink);
+                }
+            } else {
+                showFallbackLink(newLink);
+            }
+        }
+
+        function showFallbackLink(link) {
+            const linkContainer = document.getElementById('linkContainer');
+            const generatedLinkInput = document.getElementById('generatedLink');
+            generatedLinkInput.value = link;
+            linkContainer.style.display = 'block';
+            alert("आपका ब्राउज़र सीधा शेयर करना सपोर्ट नहीं करता। लिंक कॉपी करके मैन्युअल शेयर करें।");
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('generatedLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(linkInput.value).then(() => {
+                alert("लिंक कॉपी हो गया है!");
+            });
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.2/dist/fireworks.js"></script>
+    <script>
+        try {
+            const fw_container = document.getElementById('fireworks-container');
+            const fireworks = new Fireworks.default(fw_container, {
+                rocketsPoint: { min: 0, max: 100 },
+                delay: { min: 15, max: 30 },
+                brightness: { min: 60, max: 90 },
+                decay: { min: 0.01, max: 0.02 },
+                flickering: 70,
+                intensity: 8,
+                traceSpeed: 2.5,
+                explosion: 8,
+                trace: 6,
+                particles: 30,
+                sound: { enabled: true, volume: { min: 8, max: 12 } }
+            });
+            fireworks.start();
+        } catch (e) {
+            console.error("Fireworks effect failed to load.", e);
+        }
+    </script>
+</body>
+</html>
