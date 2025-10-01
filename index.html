@@ -11,14 +11,15 @@
         body {
             font-family: 'Laila', serif;
             margin: 0;
-            padding: 20px;
+            /* Adjusted top padding for the smaller ad bar */
+            padding: 80px 20px 20px 20px; 
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             background-color: #2a080a;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         #fireworks-container {
@@ -152,9 +153,33 @@
             font-size: 0.9em;
             margin-bottom: 10px;
         }
+        
+        /* --- Style for Ad Container (Size Controlled) --- */
+        #ad-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically center content */
+            padding: 5px 0;
+            background-color: #1a0506;
+            
+            /* --- NEW CSS TO CONTROL SIZE --- */
+            max-height: 60px; /* Set a maximum height for the ad bar */
+            overflow: hidden; /* Hide anything that spills out */
+        }
     </style>
 </head>
 <body>
+
+    <div id="ad-container">
+        <script async="async" data-cfasync="false" src="//pl27752549.revenuecpmgate.com/0e4e7e193d9eb8aa40d34717d96aeb96/invoke.js"></script>
+        <div id="container-0e4e7e193d9eb8aa40d34717d96aeb96"></div>
+    </div>
 
     <div id="fireworks-container"></div>
 
@@ -177,9 +202,9 @@
             <button onclick="copyLink()">Link Copy Karein</button>
         </div>
     </div>
-
+    
     <script>
-        // Greeting message ko turant dikhana (FIXED)
+        // Greeting message ko turant dikhana
         (function showGreeting() {
             const urlParams = new URLSearchParams(window.location.search);
             const senderName = urlParams.get('from');
